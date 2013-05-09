@@ -9,7 +9,7 @@
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
     <![endif]-->
 
     <%= stylesheet_link_tag "application", :media => "all" %>
@@ -36,55 +36,93 @@
   </head>
   <body>
 
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="navbar-inner">
         <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">Jiansurvery</a>
-          <div class="container nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          <div class="row">
+            <div class="span10 offset1">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+              <a class="brand" href="#">简单问卷</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li class="active">
+                  <a href="/index.php/page">主页</a>
+                  </li>
+                  <li class="login">
+                  <a href="/index.php/survey/create">创建问卷</a>
+                  </li>
+                  <li class="login">
+                  <a href="/index.php/page/mysurvey">我的问卷</a>
+                  </li>
+                </ul>
+                <!--
+                <form class="form-search navbar-search pull-left">
+                  <input name="search" type="text" class="search-query span2" placeholder="search">
+                  <button type="submit" class="btn-small">搜索</button>
+                </form>
+                -->
+                <ul class="nav pull-right">
+                  <li class="logout"><a href="/index.php/auth/login" class="">登录</a></li>
+                  <li class="logout"><a href="/index.php/auth/signup" class="">注册</a></li>
+                  <!--<li class="divider-vertical"></li>-->
+                  <li class="dropdown profile login">
+
+                  </li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <!--End 顶级导航 -->
 
     <div class="container">
-        <div class="row">
-          <div class="span9">
-            <%= bootstrap_flash %>
-            <%= yield %>
-          </div>
-          <div class="span3">
-            <div class="well sidebar-nav">
-              <h3>Sidebar</h3>
-              <ul class="nav nav-list">
-                <li class="nav-header">Sidebar</li>
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
-              </ul>
-            </div><!--/.well -->
-          </div><!--/span-->
-        </div><!--/row-->
-
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
-
+      <div class="row">
+        <div class="span10 offset1">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+      </div><!--/row-->
     </div> <!-- /container -->
 
-    <!-- Javascripts
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "application" %>
+    <footer class="">
+    <div class="container">
+      <div class="row">
+        <div class="power span10 offset1 clear">
+          <p>感谢以下项目的支持</p>
+          <a href="http://sae.sina.com.cn" target="_blank" title="Sina SAE"><img src="/images/power/sinasae.png" alt=""></a><br>
+          <a href="http://backbonejs.org" target="_blank" title="BackboneJS"><img src="/images/power/backbone.gif" alt=""></a>
+          <a href="http://documentcloud.github.com/underscore/" target="_blank" title="underscore"><img src="/images/power/underscore.gif" alt=""></a>
+          <a href="http://jquery.com" target="_blank" title="jQuery"><img src="/images/power/jquery.gif" alt=""></a>
+          <a href="http://jqueryui.com" target="_blank" title="jQuery UI"><img src="/images/power/jqueryui.gif" alt=""></a>
+          <a href="http://twitter.github.com/bootstrap/" target="_blank" title="bootstrap"><img src="/images/power/bootstrap.gif" alt=""></a>
+          <a href="http://lesscss.org/" target="_blank" title="lesscss"><img src="/images/power/less.png" alt=""></a>
+          <br>
+          <a href="http://codeigniter.com/" target="_blank" title="CodeIgniter"><img src="/images/power/codeigniter.gif" alt=""></a>
+          <a href="http://www.phpactiverecord.org/" target="_blank" title="php.activerecord"><img src="/images/power/phpactiverecord.png" alt=""></a>
+          <a href="http://www.denglu.cc/" target="_blank" title="灯鹭"><img src="/images/power/denglu.gif" alt=""></a>
 
-  </body>
-</html>
+        </div>
+        <div class="author span10 offset1">
+          <span>在这些地方可以找到作者: </span>
+          <iframe style="height: 24px; margin-bottom: -8px" width="63" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" scrolling="no" border="0" src="http://widget.weibo.com/relationship/followbutton.php?language=zh_cn&width=63&height=24&uid=1313608362&style=1&btn=light&dpc=1"></iframe> |
+          <a href="http://aisensiy.sinaapp.com" target="_blank">A.I</a> |
+          <a href="http://www.renren.com/231261692" target="_blank">xushanchuan</a>
+        </div>
+        <div class="other span10 offset1">
+          <p>bug反馈，建议提交请联系作者的微博或者邮箱aisensiy[at]gmail.com。谢谢支持:-)</p>
+        </div>
+        <div class="copyright span10 offset1">
+          <p>Copyright &copy; 2013 简单问卷 simplesurvey All rights reserved.</p>
+        </div>
+      </div>
+      </footer>
+
+      <!-- Javascripts
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <%= javascript_include_tag "application" %>
+
+    </body>
+  </html>
