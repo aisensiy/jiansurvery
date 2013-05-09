@@ -1,5 +1,10 @@
 Jiansurvery::Application.routes.draw do
   devise_for :users
+  devise_scope :user do
+    get "sign_in" => "devise/sessions#new", as: :sign_in
+    get "sign_up" => "devise/registrations#new", as: :sign_up
+    delete "sign_out" => "devise/sessions#destroy", as: :sign_out
+  end
 
   resources :surveys
 

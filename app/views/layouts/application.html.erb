@@ -62,12 +62,19 @@
                 </form>
                 -->
                 <ul class="nav pull-right">
-                  <li class="logout"><a href="/index.php/auth/login" class="">登录</a></li>
-                  <li class="logout"><a href="/index.php/auth/signup" class="">注册</a></li>
+                  <% if current_user %>
                   <!--<li class="divider-vertical"></li>-->
                   <li class="dropdown profile login">
-
+                    <span class="headerTinymanName"><%= current_user.username %> <b class="caret"></b></span>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to "退出", sign_out_path, method: :delete %></li>
+                    </ul>
                   </li>
+                  <% else %>
+                  <li class="logout"><%= link_to "登录", sign_in_path %></li>
+                  <li class="logout"><%= link_to "注册", sign_up_path %></li>
+                  <% end %>
+
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
