@@ -63,16 +63,16 @@
                 -->
                 <ul class="nav pull-right">
                   <% if current_user %>
-                  <!--<li class="divider-vertical"></li>-->
-                  <li class="dropdown profile login">
-                    <span class="headerTinymanName"><%= current_user.username %> <b class="caret"></b></span>
+                    <!--<li class="divider-vertical"></li>-->
+                    <li class="dropdown profile login">
+                    <span class="headerTinymanName"><%= current_user.email %> <b class="caret"></b></span>
                     <ul class="dropdown-menu">
                       <li><%= link_to "退出", sign_out_path, method: :delete %></li>
                     </ul>
-                  </li>
+                    </li>
                   <% else %>
-                  <li class="logout"><%= link_to "登录", sign_in_path %></li>
-                  <li class="logout"><%= link_to "注册", sign_up_path %></li>
+                    <li class="logout"><%= link_to "登录", sign_in_path %></li>
+                    <li class="logout"><%= link_to "注册", sign_up_path %></li>
                   <% end %>
 
                 </ul>
@@ -88,7 +88,7 @@
       <div class="row">
         <div class="span10 offset1">
           <%= bootstrap_flash %>
-          <%= yield %>
+          <%= content_for?(:content) ? yield(:content) : yield %>
         </div>
       </div><!--/row-->
     </div> <!-- /container -->
@@ -130,6 +130,7 @@
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
       <%= javascript_include_tag "application" %>
+      <%= yield :javascripts %>
 
     </body>
   </html>

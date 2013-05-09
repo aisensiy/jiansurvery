@@ -1,4 +1,5 @@
 class SurveysController < ApplicationController
+  layout "survey_base"
   # GET /surveys
   # GET /surveys.json
   def index

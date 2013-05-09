@@ -12,7 +12,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require twitter/bootstrap
 //= require underscore
 //= require backbone
+//= require jquery.utility
+//= require jquery.poshytip
+//= require ace-template
 //= require_tree .
