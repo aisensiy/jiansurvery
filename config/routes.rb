@@ -1,4 +1,6 @@
 Jiansurvery::Application.routes.draw do
+  devise_for :users
+
   resources :surveys
 
 
