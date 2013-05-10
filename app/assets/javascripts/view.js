@@ -37,7 +37,7 @@ window.SurveyBase = Backbone.View.extend({
   },
   add_edit_panel: function(elem, funcs) {
     var $target = $(elem);
-    $target.append($(TemplateEngine.format('edit_panel_tmp', funcs)));
+    $target.append(TemplateEngine.format('edit_panel_tmp', funcs));
     $panel = $target.find('.edit-panel');
     var self = this;
     //刚刚添加到dom的元素
