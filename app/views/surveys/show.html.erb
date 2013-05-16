@@ -1,20 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Title:</b>
-  <%= @survey.title %>
-</p>
-
-<p>
-  <b>Descrption:</b>
-  <%= @survey.descrption %>
-</p>
-
-<p>
-  <b>Content:</b>
-  <%= @survey.content %>
-</p>
-
-
-<%= link_to 'Edit', edit_survey_path(@survey) %> |
-<%= link_to 'Back', surveys_path %>
+<% content_for :javascripts do %>
+<script>
+  var id = /\d+$/.exec(location.pathname)[0];
+  window.tag_panel = new SurveyTagPanel({'mode': 'read'});
+  window.SurveyPanel.fetch('/surveys/' + id, function(data) {
+    data.questions = JSON.parse(data.questions);
+    // tag_panel.fetch(data.tags);
+    window.survey_panel = new SurveyPanel({
+      editable : false,
+      tag_panel: window.tag_panel,
+      model : new Survey(data)
+    });
+    if(data.submited) {
+      alert('已经填写过这个问卷了哦');
+      $(':submit').attr('disabled', true);
+    }
+    window.control_panel = new ControlPanel({survey_panel: survey_panel});
+  });
+</script>
+<% end %>

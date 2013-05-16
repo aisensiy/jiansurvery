@@ -1,3 +1,5 @@
+require 'json'
+
 class SurveysController < ApplicationController
   layout "survey_base"
   # GET /surveys
@@ -6,7 +8,7 @@ class SurveysController < ApplicationController
     @surveys = Survey.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render "index", layout: "application" }
       format.json { render json: @surveys }
     end
   end
@@ -41,8 +43,9 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.json
   def create
-    @survey = Survey.new(params[:survey])
-
+    entity = JSON.parse(params[:json])
+    @survey = Survey.new
+    @survey.save_from_json(entity)
     respond_to do |format|
       if @survey.save
         format.html { redirect_to @survey, notice: 'Survey was successfully created.' }

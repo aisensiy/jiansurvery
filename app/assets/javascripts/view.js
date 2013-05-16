@@ -277,7 +277,7 @@ window.SurveyPanel = SurveyBase.extend({
     self.set_order();
   },
   save: function(url) {
-    url = url || '/index.php/survey/save';
+    url = url || '/surveys';
     var o = this.serialize(), is_valid = true;
 
     if(!o.questions.length) is_valid = false;
@@ -290,13 +290,13 @@ window.SurveyPanel = SurveyBase.extend({
 
     if(this.tag_panel)
       obj.tags = JSON.stringify(this.tag_panel.serialize());
-    $.post(url, obj, function(data) {
-      if(!data.success) {
+    $.post(url, obj, function(data, status) {
+      if(status != "success") {
         alert('保存失败了');
         return;
       }
       alert('保存成功');
-      window.location = '/index.php/survey/edit/' + data.success;
+      window.location = '/surveys/' + data.id;
     }, 'json');
   },
   get_value: function() {

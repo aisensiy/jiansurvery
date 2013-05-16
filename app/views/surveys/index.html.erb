@@ -1,27 +1,20 @@
-<h1>Listing surveys</h1>
+<div class="hero-unit">
+  <h2>欢迎使用简单问卷</h2>
+  <p>这是一个非常简单的调查问卷构建系统，你可以以最简单的方式构建起来你的问卷并轻松的获取分析结果。</p>
+</div>
+<h2>公开问卷</h2>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Descrption</th>
-    <th>Content</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<ul class="unstyled survey-list">
+  <% @surveys.each do |survey| %>
+    <li>
+    <div>
+      <h3><%= link_to survey.title, survey %></h3>
+      <div class="description"><%= survey.description %></div>
+      <div class="date">创建时间 <%= survey.created_at %></div>
+      <div class="tags">
+      </div>
+    </div>
+    </li>
+  <% end %>
+</ul>
 
-<% @surveys.each do |survey| %>
-  <tr>
-    <td><%= survey.title %></td>
-    <td><%= survey.descrption %></td>
-    <td><%= survey.content %></td>
-    <td><%= link_to 'Show', survey %></td>
-    <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
-    <td><%= link_to 'Destroy', survey, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Survey', new_survey_path %>
