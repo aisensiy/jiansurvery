@@ -318,20 +318,21 @@ window.SurveyPanel = SurveyBase.extend({
   get_result: function(e) {
     var self = this;
     e.preventDefault();
-    var url = '/index.php/survey/answer/' + this.model.id;
+    var url = '/surveys/' + this.model.id + '/answers';
     var result = this.get_value();
     if(result === false) {
       alert('不能提交空的问卷~');
       return;
     }
-    $.getJSON(url, {'json': JSON.stringify(result)}, function(data) {
+    console.log(result);
+    $.post(url, {'json': JSON.stringify(result)}, function(data) {
       if(data.success) {
-        window.location = '/survey/message';
+        window.location = '/message';
         //self.$(':submit').attr('disabled', true);
       } else {
         alert('提交失败...');
       }
-    });
+    }, 'json');
   }
 });
 

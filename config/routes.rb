@@ -1,4 +1,6 @@
 Jiansurvery::Application.routes.draw do
+
+
   devise_for :users
   devise_scope :user do
     get "sign_in" => "devise/sessions#new", as: :sign_in
@@ -6,7 +8,9 @@ Jiansurvery::Application.routes.draw do
     delete "sign_out" => "devise/sessions#destroy", as: :sign_out
   end
 
-  resources :surveys
+  resources :surveys do
+    resources :answers
+  end
 
 
   # The priority is based upon order of creation:
