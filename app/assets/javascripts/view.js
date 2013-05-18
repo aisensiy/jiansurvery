@@ -325,7 +325,7 @@ window.SurveyPanel = SurveyBase.extend({
       return;
     }
     console.log(result);
-    $.post(url, {'json': JSON.stringify(result)}, function(data) {
+    $.post(url, {'json': result}, function(data) {
       if(data.success) {
         window.location = '/message';
         //self.$(':submit').attr('disabled', true);

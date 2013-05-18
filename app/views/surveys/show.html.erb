@@ -3,7 +3,7 @@
   var id = /\d+$/.exec(location.pathname)[0];
   window.tag_panel = new SurveyTagPanel({'mode': 'read'});
   window.SurveyPanel.fetch('/surveys/' + id, function(data) {
-    data.questions = JSON.parse(data.questions);
+    data.questions = data.questions;
     // tag_panel.fetch(data.tags);
     window.survey_panel = new SurveyPanel({
       editable : false,
