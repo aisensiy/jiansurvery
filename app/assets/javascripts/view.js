@@ -976,8 +976,8 @@ window.ResultView = Backbone.View.extend({
 
   fetch: function() {
     var self = this;
-    var id = /\d+$/.exec(location.pathname)[0];
-    var url = '/index.php/result/index/' + id;
+    var id = /(\d+)\/result/.exec(location.pathname)[1];
+    var url = '/surveys/' + id + '/result.json';
     console.log(id);
     $.getJSON(url, {'filter': JSON.stringify(this.filter())}, function(data) {
       self.model = new Result(data);

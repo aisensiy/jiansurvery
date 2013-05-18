@@ -84,4 +84,21 @@ class SurveysController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def result
+    @survey = Survey.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json do
+        answers = Answer.where('survey_id = ?', @survey.id)
+        render json: answers
+      end
+    end
+  end
+
+  private
+  def statistic
+
+
+  end
 end

@@ -9,6 +9,9 @@ Jiansurvery::Application.routes.draw do
   end
 
   resources :surveys do
+    member do
+      get "result"
+    end
     resources :answers
   end
 
