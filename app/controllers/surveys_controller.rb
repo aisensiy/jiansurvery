@@ -43,9 +43,9 @@ class SurveysController < ApplicationController
   # POST /surveys
   # POST /surveys.json
   def create
-    entity = JSON.parse(params[:json])
-    @survey = Survey.new
-    @survey.save_from_json(entity)
+    json = params[:survey]
+    json[:questions] = JSON.parse(json[:questions])
+    @survey = Survey.new(json)
     respond_to do |format|
       if @survey.save
         format.html { redirect_to @survey, notice: 'Survey was successfully created.' }
@@ -61,11 +61,13 @@ class SurveysController < ApplicationController
   # PUT /surveys/1.json
   def update
     @survey = Survey.find(params[:id])
+    json = params[:survey]
+    json[:questions] = JSON.parse(json[:questions])
 
     respond_to do |format|
-      if @survey.update_attributes(params[:survey])
+      if @survey.update_attributes(json)
         format.html { redirect_to @survey, notice: 'Survey was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: @survey }
       else
         format.html { render action: "edit" }
         format.json { render json: @survey.errors, status: :unprocessable_entity }

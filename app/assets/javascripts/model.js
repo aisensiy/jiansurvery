@@ -1,10 +1,10 @@
 var Survey = Backbone.Model.extend({
   defaults : function() {return {
-    "id" : -1,
     "title" : "请在这里修改问卷的标题",
     "description" : "请在这里给你的问卷一个简单的表述",
     "questions" : []
-  }}
+  }},
+  urlRoot: "/surveys"
 });
 
 var QuestionList = Backbone.Collection.extend({

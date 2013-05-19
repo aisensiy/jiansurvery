@@ -279,6 +279,7 @@ window.SurveyPanel = SurveyBase.extend({
   save: function(url) {
     url = url || '/surveys';
     var o = this.serialize(), is_valid = true;
+    var is_update = this.model.id > 0 ? true : false;
 
     if(!o.questions.length) is_valid = false;
     if(!is_valid) {
@@ -286,18 +287,27 @@ window.SurveyPanel = SurveyBase.extend({
       return;
     }
     var obj = {};
-    obj.json = JSON.stringify(this.serialize());
+    obj = this.serialize();
+    obj.questions = JSON.stringify(obj.questions);
 
-    if(this.tag_panel)
-      obj.tags = JSON.stringify(this.tag_panel.serialize());
-    $.post(url, obj, function(data, status) {
-      if(status != "success") {
-        alert('保存失败了');
-        return;
+    // if(this.tag_panel)
+    //   obj.tags = JSON.stringify(this.tag_panel.serialize());
+
+    url = is_update ? url + '/' + this.model.id : url;
+    $.ajax({
+      url: url,
+      data: {survey: obj},
+      method: is_update ? 'put' : 'post',
+      dataType: 'json',
+      success: function(data, status) {
+        if (status != 'success') {
+          alert('保存失败了');
+          return;
+        }
+        alert('保存成功');
+        window.location = '/surveys/' + data.id + '/edit';
       }
-      alert('保存成功');
-      window.location = '/surveys/' + data.id;
-    }, 'json');
+    });
   },
   get_value: function() {
     var vals = this.$('form').serializeArray();
