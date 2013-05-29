@@ -45,6 +45,9 @@ class SurveysController < ApplicationController
   def create
     json = params[:survey]
     json[:questions] = JSON.parse(json[:questions])
+    json[:questions].each_with_index do |question, idx|
+      json[:questions][idx]['id'] = idx + 1
+    end
     @survey = Survey.new(json)
     respond_to do |format|
       if @survey.save
@@ -89,18 +92,126 @@ class SurveysController < ApplicationController
 
   def result
     @survey = Survey.find(params[:id])
+    filter = JSON.parse(params[:filter] || '{}')
+    logger.debug filter.inspect
     respond_to do |format|
       format.html
       format.json do
-        answers = Answer.where('survey_id = ?', @survey.id)
-        render json: answers
+        render json: {title: @survey.title, result: statistic(@survey, filter)}
       end
     end
   end
 
   private
-  def statistic
+  def statistic(survey, filter)
+    result = {}
 
+    survey.questions.each_with_index do |question, index|
 
+      case question["type"]
+      when /text/
+        name = "field#{question["id"]}"
+        result[name] = {
+          'type' => 'text',
+          'content' => question["content"],
+          'url' => '',
+          'results' => {}
+        }
+      when /choice/
+        name = "field#{question["id"]}"
+        result[name] = {
+          'content' => question["content"],
+          'results' => {}
+        }
+        question_result = []
+        for choice in question["choices"]
+          question_result << {
+            'content' => choice["content"],
+            'count' => 0
+          }
+
+          if choice['other']
+            result["other#{index + 1}"] = {
+              'type' => 'other',
+              'content' => "#{question["content"]} => #{choice["content"]}",
+              'url' => "",
+              'results' => []
+            }
+          end
+        end
+        result[name]['results'] = question_result
+      when /dropdown/
+        name = "field#{question["id"]}"
+        result[name] = {
+          'content' => question["content"],
+          'results' => []
+        }
+        question_result = question["choices"].map do |choice|
+          {
+            'content' => choice,
+            'count' => 0
+          }
+        end
+        result[name]['results'] = question_result
+      when 'matrix'
+        choices = question['vals'];
+        for subq in question['questions']
+          name = "field#{subq[1]}"
+          result[name] = {
+            'content' => $subq[0],
+            'results' => []
+          }
+          sub_res = choices.map do |choice|
+            {
+              'content' => $choice,
+              'count' => 0
+            }
+          end
+          result[name]['results'] = sub_res;
+        end
+      end
+    end
+
+    survey.answers.each do |answer|
+      valid = true
+      answer = answer.content
+      answer.each do |field, reply|
+        reply_arr = reply.instance_of?(Array) ? reply : [reply]
+        if !in_filter?(filter, field, reply_arr)
+          valid = false
+          break
+        end
+      end
+      filter.each do |k, v|
+        if !answer.key?(k)
+          valid = false
+          break
+        end
+      end
+      next if !valid
+      answer.each do |field, reply|
+        if result[field] &&
+           result[field]['type'] &&
+           /^(text)|(other)$/i =~ result[field]['type']
+          result[field]['results'] << reply
+          next
+        end
+        reply = reply.instance_of?(Array) ? reply : [reply]
+        reply.each { |answer_id| result[field]['results'][answer_id.to_i - 1]['count'] += 1 }
+      end
+    end
+    result
   end
+
+  def in_filter?(filter, field, values)
+    return true if filter.size == 0
+    values.each do |value|
+      next if not filter.key? field
+      if filter[field].include? value
+        return true
+      end
+    end
+    false
+  end
+
 end

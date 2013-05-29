@@ -1,8 +1,9 @@
+# -*- encoding: utf-8 -*-
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
   factory :answer do
-    survey_id 1
-    content "MyText"
+    content { {"field1" => "1"} }
   end
 end

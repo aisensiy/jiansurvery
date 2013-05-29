@@ -1,6 +1,6 @@
 window.TemplateEngine = {
   format : function(tmp, params) {
-    return AceTemplate.format(tmp, params);
+    return $.parseHTML(AceTemplate.format(tmp, params));
   }
 };
 //$(function() {
@@ -937,7 +937,7 @@ window.ResultView = Backbone.View.extend({
 
   render_sections: function(result) {
     console.log(result);
-        this.$('section').remove();
+    this.$('section').remove();
     var self = this;
     $.each(result, function(key, elem) {
       elem.name = key;
@@ -990,6 +990,7 @@ window.ResultView = Backbone.View.extend({
     var url = '/surveys/' + id + '/result.json';
     console.log(id);
     $.getJSON(url, {'filter': JSON.stringify(this.filter())}, function(data) {
+      console.log(data);
       self.model = new Result(data);
       self.render();
       self.set_filter();
