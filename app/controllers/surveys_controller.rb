@@ -189,15 +189,19 @@ class SurveysController < ApplicationController
         end
       end
       next if !valid
+      logger.debug result
       answer.each do |field, reply|
         if result[field] &&
            result[field]['type'] &&
            /^(text)|(other)$/i =~ result[field]['type']
           result[field]['results'] << reply
           next
+        elsif field =~ /other/
+          next
         end
+        logger.debug field
         reply = reply.instance_of?(Array) ? reply : [reply]
-        reply.each { |answer_id| result[field]['results'][answer_id.to_i - 1]['count'] += 1 }
+        reply.each { |answer_id| result[field]['results'][answer_id.to_i - 1]['count'] += 1 if result[field]['results'][answer_id.to_i - 1] }
       end
     end
     result
