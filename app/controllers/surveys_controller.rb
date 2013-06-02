@@ -66,6 +66,9 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     json = params[:survey]
     json[:questions] = JSON.parse(json[:questions])
+    json[:questions].each_with_index do |question, idx|
+      json[:questions][idx]['id'] = idx + 1
+    end
 
     respond_to do |format|
       if @survey.update_attributes(json)
@@ -115,7 +118,7 @@ class SurveysController < ApplicationController
           'type' => 'text',
           'content' => question["content"],
           'url' => '',
-          'results' => {}
+          'results' => []
         }
       when /choice/
         name = "field#{question["id"]}"
@@ -172,6 +175,8 @@ class SurveysController < ApplicationController
       end
     end
 
+    logger.debug result
+
     survey.answers.each do |answer|
       valid = true
       answer = answer.content
@@ -201,6 +206,7 @@ class SurveysController < ApplicationController
         end
         logger.debug field
         reply = reply.instance_of?(Array) ? reply : [reply]
+        next if !result[field]
         reply.each { |answer_id| result[field]['results'][answer_id.to_i - 1]['count'] += 1 if result[field]['results'][answer_id.to_i - 1] }
       end
     end
@@ -209,6 +215,7 @@ class SurveysController < ApplicationController
 
   def in_filter?(filter, field, values)
     return true if filter.size == 0
+    return true if not filter[field]
     values.each do |value|
       next if not filter.key? field
       if filter[field].include? value

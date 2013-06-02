@@ -1,6 +1,6 @@
 <% content_for :javascripts do %>
 <script>
-  var id = /\d+$/.exec(location.pathname)[0];
+  var id = /(\d+)\/?$/.exec(location.pathname)[1];
   window.tag_panel = new SurveyTagPanel({'mode': 'read'});
   window.SurveyPanel.fetch('/surveys/' + id, function(data) {
     data.questions = data.questions;

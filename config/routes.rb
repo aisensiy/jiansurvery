@@ -1,7 +1,8 @@
 Jiansurvery::Application.routes.draw do
+  resources :authentications
 
+  devise_for :users, controllers: {omniauth_callbacks: 'authentications'}
 
-  devise_for :users
   devise_scope :user do
     get "sign_in" => "devise/sessions#new", as: :sign_in
     get "sign_up" => "devise/registrations#new", as: :sign_up

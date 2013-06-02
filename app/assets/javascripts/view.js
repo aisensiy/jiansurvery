@@ -918,7 +918,7 @@ window.ControlPanel = Backbone.View.extend({
 });
 
 window.ResultView = Backbone.View.extend({
-  el: $('#result_container'),
+  el: $('.result_wrapper'),
   template: 'result_tmp',
   text_template: 'result_text_tmp',
   events: {
@@ -942,9 +942,58 @@ window.ResultView = Backbone.View.extend({
     $.each(result, function(key, elem) {
       elem.name = key;
       if(/text|other/i.test(elem.type))
-        $(TemplateEngine.format(self.text_template, elem)).appendTo(self.$el);
-      else
-        $(TemplateEngine.format(self.template, elem)).appendTo(self.$el);
+        $(TemplateEngine.format(self.text_template, elem)).appendTo(self.$('#result_container'));
+      else {
+        $(TemplateEngine.format(self.template, elem)).appendTo(self.$('#result_container'));
+      }
+    });
+
+    this.$('#chart_container').empty();
+    $.each(result, function(key, elem) {
+      elem.name = key;
+      if(!/text|other/i.test(elem.type)) {
+        var sum = 0;
+        $.each(elem.results, function(key, value) {sum += value.count;});
+        var pie_data = _.map(elem.results, function(value, key) {
+          var percentage = sum != 0 ? Math.round(value.count / sum * 1000) / 10 : 0;
+          return [value.content, percentage]
+        });
+        console.log(pie_data);
+        var chart_container = $('<div class="chart"></div>').appendTo('#chart_container').height(290);
+        function draw_chart() {
+          console.log('run');
+          $(chart_container).highcharts({
+            chart: {
+            },
+            credits: {
+              enabled: false
+            },
+            title: {
+              text: elem.content
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage}%</b>',
+              percentageDecimals: 1
+            },
+            plotOptions: {
+              pie: {
+                size: '100%',
+                cursor: 'pointer',
+                dataLabels: {
+                  enabled: false
+                },
+              }
+            },
+            series: [{
+              type: 'pie',
+              data: pie_data
+            }]
+          });
+        }
+        setTimeout(function() {
+          draw_chart();
+        }, 1);
+      }
     });
   },
 
@@ -989,7 +1038,7 @@ window.ResultView = Backbone.View.extend({
     var id = /(\d+)\/result/.exec(location.pathname)[1];
     var url = '/surveys/' + id + '/result.json';
     console.log(id);
-    $.getJSON(url, {'filter': JSON.stringify(this.filter())}, function(data) {
+    $.getJSON(url, {'filter': JSON.stringify(this.filter()), timestam: +new Date}, function(data) {
       console.log(data);
       self.model = new Result(data);
       self.render();

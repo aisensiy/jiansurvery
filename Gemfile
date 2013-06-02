@@ -42,3 +42,6 @@ gem 'factory_girl_rails'
 # To use debugger
 # gem 'debugger'
 gem 'factory_girl_rails'
+gem 'devise'
+gem 'omniauth-weibo-oauth2'
+gem 'weibo_2'
