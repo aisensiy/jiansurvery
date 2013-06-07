@@ -16,3 +16,7 @@
 /public/tmp
 *.swp
 .DS_Store
+dump.rdb
+/public/assets
+/vendor/cache
+manifest.yml
