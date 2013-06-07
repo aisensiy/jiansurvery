@@ -958,10 +958,8 @@ window.ResultView = Backbone.View.extend({
           var percentage = sum != 0 ? Math.round(value.count / sum * 1000) / 10 : 0;
           return [value.content, percentage]
         });
-        console.log(pie_data);
-        var chart_container = $('<div class="chart"></div>').appendTo('#chart_container').height(290);
+        var chart_container = $('<div class="chart"></div>').appendTo('#chart_container').height(300);
         function draw_chart() {
-          console.log('run');
           $(chart_container).highcharts({
             chart: {
             },
@@ -969,11 +967,17 @@ window.ResultView = Backbone.View.extend({
               enabled: false
             },
             title: {
-              text: elem.content
+              text: '<h5>'+elem.content+'</h5>',
+							useHTML: true,
+							align: 'left',
+							style: {
+								'white-space': 'normal',
+								'text-align': 'left'
+							}
             },
             tooltip: {
-              pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-              percentageDecimals: 1
+							pointFormat: '占比: <b>{point.percentage: .1f}%</b>',
+              percentageDecimals: 2
             },
             plotOptions: {
               pie: {
@@ -1039,7 +1043,6 @@ window.ResultView = Backbone.View.extend({
     var url = '/surveys/' + id + '/result.json';
     console.log(id);
     $.getJSON(url, {'filter': JSON.stringify(this.filter()), timestam: +new Date}, function(data) {
-      console.log(data);
       self.model = new Result(data);
       self.render();
       self.set_filter();
@@ -1235,7 +1238,6 @@ window.SurveyTagPanel = Backbone.View.extend({
     this.input.val('');
   },
   enter_add_tag: function(e) {
-    console.log(e);
     if(e.keyCode == 13) {
       this.btn.click();
     }
