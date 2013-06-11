@@ -1,0 +1,34 @@
+zh-CN:
+  confirm: "确定删除么?"
+  activerecord:
+    models:
+      user: "用户"
+      comment: "回复"
+    attributes:
+      user:
+        email: "邮箱"
+        password: "密码"
+        username: "用户名"
+        password_confirmation: "再次输入"
+      comment:
+        content: "评论"
+    errors:
+      messages:
+        blank: "请输入内容"
+  activemodel:
+    errors:
+      messages:
+        blank: "请输入内容"
+  will_paginate:
+    next_label: →
+    page_gap: ! '…'
+    previous_label: ←
+  errors:
+    messages:
+      wrong_size: "上传文件最大为%{file_size}"
+      size_too_small: "is too small (should be at least %{file_size})"
+      size_too_big: "上传文件最大为%{file_size}"
+      blank: "请输入内容"
+      extension_white_list_error: "不合适的文件格式"
+
+
