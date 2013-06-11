@@ -8,3 +8,11 @@
 
 survey = FactoryGirl.create :survey
 FactoryGirl.create :answer, survey: survey
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "1"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "2"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "3"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "3"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "4"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "4"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "4"}
+FactoryGirl.create :answer, survey: survey, content: {"field1" => "4"}
