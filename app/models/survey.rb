@@ -4,6 +4,7 @@ class Survey < ActiveRecord::Base
   serialize :questions, Array
 
   has_many :answers
+  belongs_to :user
 
   def save_from_json(json)
     self.title = json["title"]
