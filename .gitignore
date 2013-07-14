@@ -20,3 +20,4 @@ dump.rdb
 /public/assets
 /vendor/cache
 manifest.yml
+/config/database.yml
