@@ -34,7 +34,7 @@ gem 'factory_girl_rails'
 # gem 'jbuilder'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -47,3 +47,4 @@ gem 'omniauth-weibo-oauth2'
 gem 'weibo_2'
 gem 'simple_form'
 gem 'rails-i18n'
+gem 'capistrano'
