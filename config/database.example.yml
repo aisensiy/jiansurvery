@@ -12,7 +12,7 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: jiansurvery_development
+  database: jiansurvey_development
   pool: 5
   username: root
   password: "000000"
@@ -24,7 +24,7 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: jiansurvery_test
+  database: jiansurvey_test
   pool: 5
   username: root
   password: "000000"
@@ -33,7 +33,7 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: jiansurvery_production
+  database: jiansurvey_production
   pool: 5
   username: root
   password: "000000"
