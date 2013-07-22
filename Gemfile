@@ -22,7 +22,7 @@ group :assets do
 end
 
 gem 'devise'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.3.0'
 gem 'twitter-bootstrap-rails'
 gem 'backbone-on-rails'
 gem 'factory_girl_rails'
